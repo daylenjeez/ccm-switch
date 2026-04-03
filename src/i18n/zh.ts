@@ -18,19 +18,14 @@ const zh = {
   "suggest.use_list": "使用 ccm list 查看所有可用配置",
 
   // init
-  "init.description": "初始化 ccm，选择数据源模式",
+  "init.description": "初始化 ccm",
   "init.already": "已初始化为 {mode} 模式，是否重新配置？(y/N) ",
-  "init.select_mode": "选择数据源模式:",
-  "init.cc_switch_detected": "cc-switch 模式 (检测到已安装)",
-  "init.cc_switch_desc": "直接读写 cc-switch 数据库，配置与 cc-switch UI 共享",
-  "init.cc_switch_not_detected": "cc-switch 模式 (未检测到)",
-  "init.cc_switch_need_install": "需要先安装 cc-switch",
-  "init.standalone": "独立模式",
-  "init.standalone_desc": "使用 ~/.ccm/config.json 存储配置，不依赖 cc-switch",
-  "init.choose": "请选择 (1/2): ",
-  "init.cc_switch_not_installed": "cc-switch 未安装，请先安装后再选择此模式",
-  "init.done_cc_switch": "✓ 已设置为 cc-switch 模式",
-  "init.done_standalone": "✓ 已设置为独立模式",
+  "init.cc_switch_found": "检测到 cc-switch 已安装，是否从中导入配置？(Y/n) ",
+  "init.imported": "✓ 已导入 {count} 个配置",
+  "init.current": "当前激活: {name}",
+  "init.no_current": "当前无激活配置",
+  "init.done_cc_switch": "✓ 已初始化为 cc-switch 模式",
+  "init.done_standalone": "✓ 已初始化为独立模式",
 
   // config
   "config.description": "查看或切换数据源模式",

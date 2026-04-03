@@ -20,19 +20,14 @@ const en: Record<TranslationKey, string> = {
   "suggest.use_list": "Use ccm list to see all available configurations",
 
   // init
-  "init.description": "Initialize ccm, choose data source mode",
+  "init.description": "Initialize ccm",
   "init.already": "Already initialized as {mode} mode. Reconfigure? (y/N) ",
-  "init.select_mode": "Select data source mode:",
-  "init.cc_switch_detected": "cc-switch mode (detected)",
-  "init.cc_switch_desc": "Read/write cc-switch database, share configs with cc-switch UI",
-  "init.cc_switch_not_detected": "cc-switch mode (not detected)",
-  "init.cc_switch_need_install": "Install cc-switch first",
-  "init.standalone": "Standalone mode",
-  "init.standalone_desc": "Use ~/.ccm/config.json for config storage, no cc-switch dependency",
-  "init.choose": "Choose (1/2): ",
-  "init.cc_switch_not_installed": "cc-switch is not installed. Please install it first",
-  "init.done_cc_switch": "✓ Set to cc-switch mode",
-  "init.done_standalone": "✓ Set to standalone mode",
+  "init.cc_switch_found": "cc-switch detected. Import configurations from it? (Y/n) ",
+  "init.imported": "✓ Imported {count} configurations",
+  "init.current": "Active: {name}",
+  "init.no_current": "No active configuration",
+  "init.done_cc_switch": "✓ Initialized in cc-switch mode",
+  "init.done_standalone": "✓ Initialized in standalone mode",
 
   // config
   "config.description": "View or switch data source mode",

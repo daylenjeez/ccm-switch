@@ -158,34 +158,27 @@ program
       if (confirm.toLowerCase() !== "y") return;
     }
 
-    const hasCcSwitch = ccSwitchExists();
-
-    console.log(chalk.bold(`\n${t("init.select_mode")}\n`));
-    if (hasCcSwitch) {
-      console.log(`  ${chalk.cyan("1)")} ${t("init.cc_switch_detected")}`);
-      console.log(`     ${t("init.cc_switch_desc")}\n`);
-    } else {
-      console.log(`  ${chalk.gray("1)")} ${t("init.cc_switch_not_detected")}`);
-      console.log(`     ${t("init.cc_switch_need_install")}\n`);
-    }
-    console.log(`  ${chalk.cyan("2)")} ${t("init.standalone")}`);
-    console.log(`     ${t("init.standalone_desc")}\n`);
-
-    const choice = await ask(t("init.choose"));
-
-    if (choice === "1") {
-      if (!hasCcSwitch) {
-        console.log(chalk.red(t("init.cc_switch_not_installed")));
+    if (ccSwitchExists()) {
+      const use = await ask(t("init.cc_switch_found"));
+      if (use.toLowerCase() !== "n") {
+        writeRc({ mode: "cc-switch" });
+        const { CcSwitchStore } = await import("./store/cc-switch.js");
+        const store = new CcSwitchStore();
+        const profiles = store.list();
+        const current = store.getCurrent();
+        console.log(chalk.green(t("init.done_cc_switch")));
+        console.log(chalk.green(t("init.imported", { count: String(profiles.length) })));
+        if (current) {
+          console.log(chalk.gray(t("init.current", { name: current })));
+        } else {
+          console.log(chalk.gray(t("init.no_current")));
+        }
         return;
       }
-      writeRc({ mode: "cc-switch" });
-      console.log(chalk.green(`\n${t("init.done_cc_switch")}`));
-    } else if (choice === "2") {
-      writeRc({ mode: "standalone" });
-      console.log(chalk.green(`\n${t("init.done_standalone")}`));
-    } else {
-      console.log(chalk.red(t("error.invalid_choice")));
     }
+
+    writeRc({ mode: "standalone" });
+    console.log(chalk.green(t("init.done_standalone")));
   });
 
 // ccm config

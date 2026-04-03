@@ -34,9 +34,12 @@ const zh = {
   "config.switched": "✓ 已切换为 {mode} 模式",
 
   // list
-  "list.description": "列出所有可用的配置方案",
+  "list.description": "列出并选择配置方案",
   "list.empty": "暂无配置方案。使用 ccm save <name> 保存当前配置",
   "list.header": "可用配置:",
+  "list.select": "选择配置:",
+  "list.current_marker": "(当前)",
+  "list.cancelled": "已取消",
 
   // current
   "current.description": "显示当前生效的配置",

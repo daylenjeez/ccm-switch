@@ -36,9 +36,12 @@ const en: Record<TranslationKey, string> = {
   "config.switched": "✓ Switched to {mode} mode",
 
   // list
-  "list.description": "List all available configurations",
+  "list.description": "List and select configurations",
   "list.empty": "No configurations yet. Use ccm save <name> to save current config",
   "list.header": "Available configurations:",
+  "list.select": "Select configuration:",
+  "list.current_marker": "(current)",
+  "list.cancelled": "Cancelled",
 
   // current
   "current.description": "Show the currently active configuration",

@@ -11,6 +11,7 @@ import { writeFileSync, readFileSync, unlinkSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import { t } from "./i18n/index.js";
+import prompts from "prompts";
 
 const program = new Command();
 
@@ -201,7 +202,7 @@ program
   .command("list")
   .alias("ls")
   .description(t("list.description"))
-  .action(() => {
+  .action(async () => {
     const store = ensureStore();
     const profiles = store.list();
     const current = store.getCurrent();
@@ -211,18 +212,46 @@ program
       return;
     }
 
-    console.log(chalk.bold(`\n${t("list.header")}\n`));
-    for (const p of profiles) {
+    const choices = profiles.map((p) => {
       const isCurrent = p.name === current;
-      const marker = isCurrent ? chalk.green("● ") : "  ";
-      const name = isCurrent ? chalk.green.bold(p.name) : p.name;
       const env = (p.settingsConfig.env || {}) as Record<string, string>;
       const model = env["ANTHROPIC_MODEL"] || "N/A";
       const baseUrl = env["ANTHROPIC_BASE_URL"] || "default";
-      console.log(`${marker}${name}`);
-      console.log(`    ${t("common.model")}: ${chalk.cyan(model)}  ${t("common.source")}: ${chalk.gray(baseUrl)}`);
+      const marker = isCurrent ? chalk.green("● ") : "  ";
+      const label = isCurrent ? chalk.green.bold(p.name) : p.name;
+      const tag = isCurrent ? chalk.gray(` ${t("list.current_marker")}`) : "";
+      return {
+        title: `${marker}${label}${tag}`,
+        description: `${t("common.model")}: ${model}  ${t("common.source")}: ${baseUrl}`,
+        value: p.name,
+      };
+    });
+
+    const initial = profiles.findIndex((p) => p.name === current);
+    const response = await prompts({
+      type: "select",
+      name: "name",
+      message: t("list.select"),
+      choices,
+      initial: initial >= 0 ? initial : 0,
+    });
+
+    if (!response.name) {
+      console.log(chalk.gray(t("list.cancelled")));
+      return;
     }
-    console.log();
+
+    if (response.name === current) return;
+
+    const profile = store.get(response.name)!;
+    applyProfile(profile.settingsConfig);
+    store.setCurrent(profile.name);
+
+    const env = (profile.settingsConfig.env || {}) as Record<string, string>;
+    const model = env["ANTHROPIC_MODEL"] || "N/A";
+    console.log(chalk.green(t("use.done", { name: chalk.bold(profile.name) })));
+    console.log(`  ${t("common.model")}: ${chalk.cyan(model)}`);
+    console.log(chalk.gray(`  ${t("use.restart")}`));
   });
 
 // ccm current

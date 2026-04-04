@@ -69,7 +69,7 @@ All configs sync both ways — add in ccm, see it in cc-switch UI, and vice vers
 
 ## ➕ Adding Configurations
 
-Three ways to add a provider configuration:
+Two ways to add a provider configuration:
 
 ### 1. Interactive wizard (recommended)
 
@@ -108,15 +108,7 @@ Choose (1/2): 1
 Switch to this configuration now? (Y/n)
 ```
 
-### 2. Save current settings
-
-Already have Claude Code configured? Save it as a profile in one command:
-
-```bash
-ccm save my-config
-```
-
-### 3. Edit JSON directly
+### 2. Edit JSON directly
 
 In standalone mode, edit `~/.ccm/config.json`:
 

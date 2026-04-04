@@ -25,6 +25,14 @@ export function applyProfile(settingsConfig: Record<string, unknown>): void {
   writeFileSync(SETTINGS_PATH, JSON.stringify(merged, null, 2));
 }
 
+export function clearEnvFromSettings(): void {
+  if (!existsSync(SETTINGS_PATH)) return;
+  const current = readClaudeSettings();
+  if (!("env" in current)) return;
+  delete current.env;
+  writeFileSync(SETTINGS_PATH, JSON.stringify(current, null, 2));
+}
+
 export function getSettingsPath(): string {
   return SETTINGS_PATH;
 }

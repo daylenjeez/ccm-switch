@@ -137,6 +137,16 @@ const en: Record<TranslationKey, string> = {
   "sync.no_current": "No active configuration",
   "sync.prompt_alias": "Set alias for current config (Enter to skip): ",
 
+  // uninstall
+  "uninstall.description": "Uninstall ccm and clean up data files",
+  "uninstall.confirm": "Delete all ccm data files? (y/N) ",
+  "uninstall.cancelled": "Uninstall cancelled",
+  "uninstall.removed": "✓ Deleted {path}",
+  "uninstall.clear_env": "Also clear env config in ~/.claude/settings.json? (y/N) ",
+  "uninstall.env_cleared": "✓ Cleared env config",
+  "uninstall.done": "✓ Uninstall complete",
+  "uninstall.npm_remove": "Tip: to remove the CLI, run npm uninstall -g @daylenjeez/ccm-switch",
+
   // store errors
   "store.db_not_found": "cc-switch database not found: {path}",
 };

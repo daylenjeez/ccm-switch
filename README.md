@@ -134,6 +134,7 @@ Aliases are stored in `~/.ccm/rc.json`:
 | `ccm current` | | Show active configuration |
 | `ccm config` | | View data source mode (deprecated) |
 | `ccm sync` | | Sync cc-switch configs into standalone |
+| `ccm uninstall` | | Clean up data files |
 
 ### Aliases
 

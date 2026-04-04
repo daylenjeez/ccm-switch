@@ -4,11 +4,11 @@ import { Command } from "commander";
 import chalk from "chalk";
 import { readRc, writeRc, getStore } from "./utils.js";
 import { ccSwitchExists } from "./store/cc-switch.js";
-import { readClaudeSettings, applyProfile, getSettingsPath } from "./claude.js";
+import { readClaudeSettings, applyProfile, clearEnvFromSettings, getSettingsPath } from "./claude.js";
 import { createInterface } from "readline";
 import { spawnSync } from "child_process";
-import { writeFileSync, readFileSync, unlinkSync } from "fs";
-import { tmpdir } from "os";
+import { writeFileSync, readFileSync, unlinkSync, existsSync } from "fs";
+import { tmpdir, homedir } from "os";
 import { join } from "path";
 import { t, setLocale } from "./i18n/index.js";
 import * as clack from "@clack/prompts";
@@ -263,6 +263,45 @@ program
     }
 
     ccStore.close();
+  });
+
+// ccm uninstall
+program
+  .command("uninstall")
+  .description(t("uninstall.description"))
+  .action(async () => {
+    const confirm = await ask(t("uninstall.confirm"));
+    if (confirm.toLowerCase() !== "y") {
+      console.log(chalk.gray(t("uninstall.cancelled")));
+      return;
+    }
+
+    const rcPath = join(homedir(), ".ccm", "rc.json");
+    const configPath = join(homedir(), ".ccm", "config.json");
+
+    if (existsSync(configPath)) {
+      unlinkSync(configPath);
+      console.log(chalk.green(t("uninstall.removed", { path: configPath })));
+    }
+    if (existsSync(rcPath)) {
+      unlinkSync(rcPath);
+      console.log(chalk.green(t("uninstall.removed", { path: rcPath })));
+    }
+
+    const settingsPath = getSettingsPath();
+    if (existsSync(settingsPath)) {
+      const settings = readClaudeSettings();
+      if ("env" in settings) {
+        const clearEnv = await ask(t("uninstall.clear_env"));
+        if (clearEnv.toLowerCase() === "y") {
+          clearEnvFromSettings();
+          console.log(chalk.green(t("uninstall.env_cleared")));
+        }
+      }
+    }
+
+    console.log(chalk.green(t("uninstall.done")));
+    console.log(chalk.gray(t("uninstall.npm_remove")));
   });
 
 // ccm list

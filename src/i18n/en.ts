@@ -141,8 +141,6 @@ const en: Record<TranslationKey, string> = {
   "clear.confirm": "Delete all ccm data files? (y/N) ",
   "clear.cancelled": "Cancelled",
   "clear.removed": "✓ Deleted {path}",
-  "clear.clear_env": "Also clear env config in ~/.claude/settings.json? (y/N) ",
-  "clear.env_cleared": "✓ Cleared env config",
   "clear.done": "✓ Cleanup complete",
 
   // store errors

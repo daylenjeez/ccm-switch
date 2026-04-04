@@ -139,8 +139,6 @@ const zh = {
   "clear.confirm": "确认删除所有 ccm 数据文件？(y/N) ",
   "clear.cancelled": "已取消清理",
   "clear.removed": "✓ 已删除 {path}",
-  "clear.clear_env": "是否同时清除 ~/.claude/settings.json 中的 env 配置？(y/N) ",
-  "clear.env_cleared": "✓ 已清除 env 配置",
   "clear.done": "✓ 清理完成",
 
   // store errors

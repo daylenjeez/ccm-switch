@@ -4,7 +4,7 @@ import { Command } from "commander";
 import chalk from "chalk";
 import { readRc, writeRc, getStore } from "./utils.js";
 import { ccSwitchExists } from "./store/cc-switch.js";
-import { readClaudeSettings, applyProfile, clearEnvFromSettings, getSettingsPath } from "./claude.js";
+import { readClaudeSettings, applyProfile } from "./claude.js";
 import { createInterface } from "readline";
 import { spawnSync } from "child_process";
 import { writeFileSync, readFileSync, unlinkSync, existsSync } from "fs";
@@ -268,18 +268,6 @@ program
     if (existsSync(rcPath)) {
       unlinkSync(rcPath);
       console.log(chalk.green(t("clear.removed", { path: rcPath })));
-    }
-
-    const settingsPath = getSettingsPath();
-    if (existsSync(settingsPath)) {
-      const settings = readClaudeSettings();
-      if ("env" in settings) {
-        const clearEnv = await ask(t("clear.clear_env"));
-        if (clearEnv.toLowerCase() === "y") {
-          clearEnvFromSettings();
-          console.log(chalk.green(t("clear.env_cleared")));
-        }
-      }
     }
 
     console.log(chalk.green(t("clear.done")));

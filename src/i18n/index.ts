@@ -41,4 +41,4 @@ export function t(key: TranslationKey, vars?: Record<string, string>): string {
   return text;
 }
 
-export { type TranslationKey };
+export { getLocale, type TranslationKey };

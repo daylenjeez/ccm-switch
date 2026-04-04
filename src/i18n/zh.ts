@@ -23,9 +23,6 @@ const zh = {
   "init.cc_switch_found":"检测到 cc-switch 已安装，是否从中导入配置？(Y/n) ",
   "init.done": "✓ 初始化完成",
 
-  // config
-  "config.description": "查看数据源模式（已废弃）",
-
   // list
   "list.description": "列出并选择配置方案",
   "list.empty": "暂无配置方案。使用 ccm save <name> 保存当前配置",

@@ -25,9 +25,6 @@ const en: Record<TranslationKey, string> = {
   "init.cc_switch_found":"cc-switch detected. Import configurations from it? (Y/n) ",
   "init.done": "✓ Initialized",
 
-  // config
-  "config.description": "View data source mode (deprecated)",
-
   // list
   "list.description": "List and select configurations",
   "list.empty": "No configurations yet. Use ccm save <name> to save current config",

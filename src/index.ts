@@ -11,7 +11,7 @@ import { writeFileSync, readFileSync, unlinkSync, existsSync } from "fs";
 import { tmpdir, homedir } from "os";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { t, setLocale } from "./i18n/index.js";
+import { t, setLocale, getLocale } from "./i18n/index.js";
 import * as clack from "@clack/prompts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -202,14 +202,6 @@ program
         ccStore.close();
       }
     }
-  });
-
-// ccm config (deprecated, kept for compatibility)
-program
-  .command("config")
-  .description(t("config.description"))
-  .action(async () => {
-    console.log(chalk.gray("ccm now only uses standalone mode. No configuration needed."));
   });
 
 // ccm sync
@@ -956,7 +948,7 @@ localeCmd
   .description(t("locale.list_description"))
   .action(async () => {
     const rc = readRc();
-    const current = rc?.locale || "zh";
+    const current = rc?.locale || getLocale();
     const isInteractive = process.stdin.isTTY && process.stdout.isTTY;
 
     if (isInteractive) {

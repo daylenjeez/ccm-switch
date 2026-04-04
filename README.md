@@ -10,7 +10,7 @@ Switch Claude Code custom model configurations from the terminal in seconds.
 [![license](https://img.shields.io/npm/l/@daylenjeez/ccm-switch.svg?style=flat-square)](https://github.com/daylenjeez/ccm-switch/blob/main/LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen?style=flat-square)](https://nodejs.org)
 
-[中文文档](./README.zh-CN.md) | English
+[中文文档](https://github.com/daylenjeez/ccm-switch/blob/main/README.zh-CN.md) | English
 
 [Install](#-install) · [Quick Start](#-quick-start) · [Commands](#-commands) · [How It Works](#%EF%B8%8F-how-it-works)
 

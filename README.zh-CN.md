@@ -10,7 +10,7 @@
 [![license](https://img.shields.io/npm/l/@daylenjeez/ccm-switch.svg?style=flat-square)](https://github.com/daylenjeez/ccm-switch/blob/main/LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen?style=flat-square)](https://nodejs.org)
 
-English | [中文文档](./README.zh-CN.md)
+English | [中文文档](https://github.com/daylenjeez/ccm-switch/blob/main/README.zh-CN.md)
 
 [安装](#-安装) · [快速开始](#-快速开始) · [命令一览](#-命令一览) · [工作原理](#%EF%B8%8F-工作原理)
 

@@ -1,6 +1,6 @@
 {
   "name": "@daylenjeez/ccm-switch",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Claude Code Model Switcher - 快速切换 Claude Code 自定义模型配置",
   "type": "module",
   "main": "dist/index.js",

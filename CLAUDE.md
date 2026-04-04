@@ -50,3 +50,15 @@ Uses `@clack/prompts` for TTY environments, falls back to numbered list + readli
 - Commands use `ensureStore()` which exits if not initialized.
 - Token display is always masked: first 8 + `...` + last 4 chars.
 - `applyProfile()` preserves `USER_FIELDS = ["language", "permissions"]`.
+
+## Communication Style
+
+Be direct. No filler, no praise, no preamble. Say what changed, what broke, or what to do next.
+
+Bad:
+> Great question! I can see you're working with a loop. Let me take a look at that. That's a thoughtful piece of code! However, I notice there's actually a subtle bug here...
+
+Good:
+> Off-by-one: `i <= arr.length` → `i < arr.length`.
+
+Don't suggest "improvements" or "modern alternatives" unless asked. Fix what's broken, answer what's asked, stop.

@@ -20,7 +20,7 @@ Switch Claude Code custom model configurations from the terminal in seconds.
 
 ## ✨ Highlights
 
-- 🔌 **cc-switch Integration** — Reads [cc-switch](https://github.com/nicepkg/cc-switch) database directly, zero migration
+- 🔌 **cc-switch Integration** — Reads [cc-switch](https://github.com/farion1231/cc-switch) database directly, zero migration
 - 🧙 **Interactive Wizard** — `ccm add` guides you step by step, type `<` to go back
 - ⚡ **One-command Switch** — `ccm use OpenRouter` or `ccm ls` with arrow keys
 - 🛡️ **Safe Switching** — Preserves `language`, `permissions` and other personal settings
@@ -44,7 +44,7 @@ cd ccm && npm install && npm run build && npm link
 
 ```bash
 ccm init   # Auto-detects cc-switch or initializes standalone mode
-ccm ls     # Browse & switch
+ccm add    # Interactive wizard to add a provider
 ```
 
 > **Without ccm**: Manually edit `~/.claude/settings.json`, copy-paste API keys, restart, hope the JSON isn't broken.
@@ -52,7 +52,7 @@ ccm ls     # Browse & switch
 
 ## 🔌 cc-switch Integration
 
-Already using [cc-switch](https://github.com/nicepkg/cc-switch)? ccm reads its SQLite database directly:
+Already using [cc-switch](https://github.com/farion1231/cc-switch)? ccm reads its SQLite database directly:
 
 ```bash
 $ ccm init

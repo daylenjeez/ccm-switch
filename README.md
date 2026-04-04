@@ -23,8 +23,8 @@ Switch Claude Code custom model configurations from the terminal in seconds.
 | 🔌 | **cc-switch Integration** | Reads [cc-switch](https://github.com/nicepkg/cc-switch) database directly — zero migration |
 | 🧙 | **Interactive Wizard** | `ccm add` guides you step by step, with `<` to go back |
 | ⚡ | **One-command Switch** | `ccm use OpenRouter` or `ccm ls` with arrow keys |
-| 🔍 | **Fuzzy Matching** | Mistyped? Auto-suggests the closest config name |
 | 🛡️ | **Safe Switching** | Preserves `language`, `permissions` and other personal settings |
+| 🚀 | **Zero Config** | Just `ccm init` and follow the prompts — no docs needed |
 | 🌍 | **i18n** | English / 中文 (`ccm locale set en/zh`) |
 
 ## 📦 Install
@@ -123,6 +123,16 @@ In standalone mode, edit `~/.ccm/config.json`:
 }
 ```
 
+Aliases are stored in `~/.ccm/rc.json`:
+
+```json
+{
+  "aliases": {
+    "or": "OpenRouter"
+  }
+}
+```
+
 ## 📖 Commands
 
 ### Core
@@ -131,7 +141,7 @@ In standalone mode, edit `~/.ccm/config.json`:
 |---|---|---|
 | `ccm init` | | Initialize, auto-detect cc-switch |
 | `ccm list` | `ls` | Interactive list & switch |
-| `ccm use <name>` | | Switch by name (fuzzy matching) |
+| `ccm use <name>` | | Switch by name |
 | `ccm add` | `new` | Interactive add wizard |
 | `ccm save <name>` | | Save current settings as profile |
 | `ccm show [name]` | | View config details |
@@ -162,20 +172,6 @@ ccm use or  # same as: ccm use OpenRouter
 |---|---|
 | `ccm locale` / `ls` | List & switch language |
 | `ccm locale set <lang>` | Set language (`zh` / `en`) |
-
-## 🔍 Fuzzy Matching
-
-```
-$ ccm use openroter
-Configuration "openroter" not found
-Did you mean: OpenRouter?
-```
-
-| Strategy | Priority |
-|---|---|
-| Case-insensitive exact match | 1st |
-| Substring match | 2nd |
-| Levenshtein distance ≤ 3 | 3rd |
 
 ## ⚙️ How It Works
 

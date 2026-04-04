@@ -23,8 +23,8 @@ English | [中文文档](./README.zh-CN.md)
 | 🔌 | **cc-switch 无缝对接** | 直接读取 [cc-switch](https://github.com/nicepkg/cc-switch) 数据库，无需迁移 |
 | 🧙 | **交互式向导** | `ccm add` 逐步引导，输入 `<` 可返回上一步 |
 | ⚡ | **一键切换** | `ccm use OpenRouter` 或 `ccm ls` 方向键选择 |
-| 🔍 | **模糊匹配** | 输错了？自动提示最接近的配置名 |
 | 🛡️ | **安全切换** | 自动保留 `language`、`permissions` 等个人设置 |
+| 🚀 | **零配置上手** | 直接 `ccm init`，跟着提示走，无需阅读文档 |
 | 🌍 | **中英双语** | `ccm locale set zh/en` 切换界面语言 |
 
 ## 📦 安装
@@ -123,6 +123,16 @@ $ ccm add
 }
 ```
 
+别名存储在 `~/.ccm/rc.json` 中：
+
+```json
+{
+  "aliases": {
+    "or": "OpenRouter"
+  }
+}
+```
+
 ## 📖 命令一览
 
 ### 核心命令
@@ -131,7 +141,7 @@ $ ccm add
 |---|---|---|
 | `ccm init` | | 初始化，自动检测 cc-switch |
 | `ccm list` | `ls` | 交互式列表 & 切换 |
-| `ccm use <name>` | | 按名称切换（模糊匹配） |
+| `ccm use <name>` | | 按名称切换 |
 | `ccm add` | `new` | 交互式添加向导 |
 | `ccm save <name>` | | 将当前设置保存为方案 |
 | `ccm show [name]` | | 查看配置详情 |
@@ -162,20 +172,6 @@ ccm use or  # 等同于: ccm use OpenRouter
 |---|---|
 | `ccm locale` / `ls` | 列出并切换语言 |
 | `ccm locale set <lang>` | 设置语言（`zh` / `en`） |
-
-## 🔍 模糊匹配
-
-```
-$ ccm use openroter
-配置 "openroter" 不存在
-你是不是想说: OpenRouter?
-```
-
-| 策略 | 优先级 |
-|---|---|
-| 大小写不敏感精确匹配 | 第 1 优先 |
-| 子串匹配 | 第 2 优先 |
-| Levenshtein 编辑距离 ≤ 3 | 第 3 优先 |
 
 ## ⚙️ 工作原理
 

@@ -264,7 +264,7 @@ program
 
       const initial = profiles.findIndex((p) => p.name === current);
       const selected = await clack.select({
-        message: t("list.select"),
+        message: "",
         options,
         initialValue: initial >= 0 ? profiles[initial].name : profiles[0].name,
       });
@@ -578,7 +578,7 @@ program
         });
 
         const selected = await clack.select({
-          message: t("modify.select"),
+          message: "",
           options,
         });
 
@@ -736,7 +736,7 @@ program
         });
 
         const selected = await clack.select({
-          message: t("remove.select"),
+          message: "",
           options,
         });
 
@@ -911,7 +911,7 @@ localeCmd
       });
 
       const selected = await clack.select({
-        message: t("locale.select"),
+        message: "",
         options,
         initialValue: current,
       });

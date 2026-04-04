@@ -134,7 +134,7 @@ ANTHROPIC_DEFAULT_HAIKU_MODEL (可选):
 | `ccm current` | | 显示当前激活配置 |
 | `ccm config` | | 查看数据源模式（已废弃） |
 | `ccm sync` | | 从 cc-switch 同步配置到本地 |
-| `ccm uninstall` | | 清理数据文件 |
+| `ccm clear` | | 清理数据文件 |
 
 ### 别名管理
 

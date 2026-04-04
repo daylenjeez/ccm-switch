@@ -265,14 +265,14 @@ program
     ccStore.close();
   });
 
-// ccm uninstall
+// ccm clear
 program
-  .command("uninstall")
-  .description(t("uninstall.description"))
+  .command("clear")
+  .description(t("clear.description"))
   .action(async () => {
-    const confirm = await ask(t("uninstall.confirm"));
+    const confirm = await ask(t("clear.confirm"));
     if (confirm.toLowerCase() !== "y") {
-      console.log(chalk.gray(t("uninstall.cancelled")));
+      console.log(chalk.gray(t("clear.cancelled")));
       return;
     }
 
@@ -281,27 +281,27 @@ program
 
     if (existsSync(configPath)) {
       unlinkSync(configPath);
-      console.log(chalk.green(t("uninstall.removed", { path: configPath })));
+      console.log(chalk.green(t("clear.removed", { path: configPath })));
     }
     if (existsSync(rcPath)) {
       unlinkSync(rcPath);
-      console.log(chalk.green(t("uninstall.removed", { path: rcPath })));
+      console.log(chalk.green(t("clear.removed", { path: rcPath })));
     }
 
     const settingsPath = getSettingsPath();
     if (existsSync(settingsPath)) {
       const settings = readClaudeSettings();
       if ("env" in settings) {
-        const clearEnv = await ask(t("uninstall.clear_env"));
+        const clearEnv = await ask(t("clear.clear_env"));
         if (clearEnv.toLowerCase() === "y") {
           clearEnvFromSettings();
-          console.log(chalk.green(t("uninstall.env_cleared")));
+          console.log(chalk.green(t("clear.env_cleared")));
         }
       }
     }
 
-    console.log(chalk.green(t("uninstall.done")));
-    console.log(chalk.gray(t("uninstall.npm_remove")));
+    console.log(chalk.green(t("clear.done")));
+    console.log(chalk.gray(t("clear.npm_remove")));
   });
 
 // ccm list

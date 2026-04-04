@@ -135,15 +135,15 @@ const zh = {
   "sync.no_current": "当前无激活配置",
   "sync.prompt_alias": "为当前配置设置别名（回车跳过）: ",
 
-  // uninstall
-  "uninstall.description": "卸载 ccm 并清理数据文件",
-  "uninstall.confirm": "确认删除所有 ccm 数据文件？(y/N) ",
-  "uninstall.cancelled": "已取消卸载",
-  "uninstall.removed": "✓ 已删除 {path}",
-  "uninstall.clear_env": "是否同时清除 ~/.claude/settings.json 中的 env 配置？(y/N) ",
-  "uninstall.env_cleared": "✓ 已清除 env 配置",
-  "uninstall.done": "✓ 卸载完成",
-  "uninstall.npm_remove": "提示：如需移除 CLI，请手动运行 npm uninstall -g @daylenjeez/ccm-switch",
+  // clear
+  "clear.description": "清理 ccm 数据文件",
+  "clear.confirm": "确认删除所有 ccm 数据文件？(y/N) ",
+  "clear.cancelled": "已取消清理",
+  "clear.removed": "✓ 已删除 {path}",
+  "clear.clear_env": "是否同时清除 ~/.claude/settings.json 中的 env 配置？(y/N) ",
+  "clear.env_cleared": "✓ 已清除 env 配置",
+  "clear.done": "✓ 清理完成",
+  "clear.npm_remove": "提示：如需移除 CLI，请手动运行 npm uninstall -g @daylenjeez/ccm-switch",
 
   // store errors
   "store.db_not_found": "cc-switch 数据库不存在: {path}",

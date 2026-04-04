@@ -142,6 +142,15 @@ ccm save my-config
 | `ccm alias rm <short>` | 删除别名 |
 | `ccm alias list` / `ls` | 列出所有别名 |
 
+### 别名管理
+
+为常用配置创建快捷方式：
+
+```bash
+ccm alias set or OpenRouter
+ccm use or  # 等同于: ccm use OpenRouter
+```
+
 ### 语言设置
 
 | 命令 | 说明 |

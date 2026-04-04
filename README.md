@@ -142,6 +142,15 @@ In standalone mode, edit `~/.ccm/config.json`:
 | `ccm alias rm <short>` | Remove alias |
 | `ccm alias list` / `ls` | List all aliases |
 
+### Aliases
+
+Create shortcuts for frequently used configurations:
+
+```bash
+ccm alias set or OpenRouter
+ccm use or  # same as: ccm use OpenRouter
+```
+
 ### Locale
 
 | Command | Description |

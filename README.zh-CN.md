@@ -64,6 +64,8 @@ $ ccm init
 
 你也可以随时运行 `ccm sync` 将最新的 cc-switch 配置同步到 `~/.ccm/config.json`。
 
+> ⚠️ **已知问题**：当 `~/.claude/settings.json` 发生变化时，cc-switch 可能会覆盖其自身的数据库中的配置。如果你同时使用两个工具，建议用 `ccm` 管理配置，`cc-switch` 仅用于查看。
+
 ## ➕ 添加配置
 
 ### 交互式向导（推荐）

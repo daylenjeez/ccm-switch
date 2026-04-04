@@ -202,6 +202,12 @@ Use `ccm clear` to delete them automatically, or clean them up manually:
 - `~/.ccm/config.json` — profiles
 - `~/.claude/settings.json` — may still contain an active `env` profile written by ccm
 
+Then remove the CLI:
+
+```bash
+npm uninstall -g @daylenjeez/ccm-switch
+```
+
 ## 📄 License
 
 [MIT](./LICENSE)

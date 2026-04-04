@@ -10,7 +10,7 @@
 [![license](https://img.shields.io/npm/l/@daylenjeez/ccm-switch.svg?style=flat-square)](https://github.com/daylenjeez/ccm-switch/blob/main/LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen?style=flat-square)](https://nodejs.org)
 
-English | [中文文档](https://github.com/daylenjeez/ccm-switch/blob/main/README.zh-CN.md)
+[English](https://github.com/daylenjeez/ccm-switch/blob/main/README.md) | 中文文档
 
 [安装](#-安装) · [快速开始](#-快速开始) · [命令一览](#-命令一览) · [工作原理](#%EF%B8%8F-工作原理)
 
@@ -20,12 +20,12 @@ English | [中文文档](https://github.com/daylenjeez/ccm-switch/blob/main/READ
 
 ## ✨ 亮点
 
-- 🔌 **cc-switch 无缝对接** — 直接读取 [cc-switch](https://github.com/farion1231/cc-switch) 数据库，无需迁移
-- 🧙 **交互式向导** — `ccm add` 逐步引导，输入 `<` 可返回上一步
-- ⚡ **一键切换** — `ccm use OpenRouter` 或 `ccm ls` 方向键选择
-- 🛡️ **安全切换** — 自动保留 `language`、`permissions` 等个人设置
-- 🚀 **零配置上手** — 直接 `ccm init`，跟着提示走，无需阅读文档
-- 🌍 **中英双语** — `ccm locale set zh/en` 切换界面语言
+- 🔌 **cc-switch Integration** — 直接读取 `cc-switch` 数据库，无需迁移
+- 🧙 **Interactive Wizard** — `ccm add` 逐步引导，输入 `<` 可返回上一步
+- ⚡ **One-command Switch** — `ccm use OpenRouter` 或 `ccm ls` 方向键选择
+- 🛡️ **Safe Switching** — 自动保留 `language`、`permissions` 等个人设置
+- 🚀 **Zero Config** — 直接 `ccm init`，跟着提示走，无需阅读文档
+- 🌍 **i18n** — `ccm locale set zh/en` 切换界面语言
 
 ## 📦 安装
 

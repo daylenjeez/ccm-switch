@@ -18,6 +18,10 @@
     "switcher"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daylenjeez/ccm-switch.git"
+  },
   "dependencies": {
     "@clack/prompts": "^1.2.0",
     "better-sqlite3": "^12.8.0",

@@ -24,7 +24,7 @@
 - 🧙 **Interactive Wizard** — `ccm add` 逐步引导，输入 `<` 可返回上一步
 - ⚡ **One-command Switch** — `ccm use OpenRouter` 或 `ccm ls` 方向键选择
 - 🛡️ **Safe Switching** — 自动保留 `language`、`permissions` 等个人设置
-- 🪶 **轻量** — 体积小巧，启动迅速，无后台进程
+- 🪶 **轻量** — 没有多余功能，只做模型切换。体积小巧，启动迅速，无后台进程
 - 🚀 **Zero Config** — 直接 `ccm init`，跟着提示走，无需阅读文档
 - 🌍 **i18n** — `ccm locale set zh/en` 切换界面语言
 

@@ -21,7 +21,9 @@ export function applyProfile(_name: string, settingsConfig: Record<string, unkno
     }
   }
 
-  const merged = { ...preserved, ...settingsConfig };
+  // Merge instead of replace: keep any top-level keys from the existing file
+  // that the profile does not explicitly set (e.g. common snippets from cc-switch)
+  const merged = { ...current, ...preserved, ...settingsConfig };
   writeFileSync(SETTINGS_PATH, JSON.stringify(merged, null, 2));
 }
 

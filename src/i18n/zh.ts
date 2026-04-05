@@ -21,6 +21,9 @@ const zh = {
   // init
   "init.description": "初始化 ccm",
   "init.cc_switch_found":"检测到 cc-switch 已安装，是否从中导入配置？(Y/n) ",
+  "init.cc_switch_mode": "✓ 检测到 cc-switch，ccm 将直接使用 cc-switch 配置库",
+  "init.cc_switch_migrate": "发现 ccm 独立配置，是否将其迁移至 cc-switch？(Y/n) ",
+  "init.cc_switch_migrate_done": "✓ 已迁移 {count} 个配置至 cc-switch",
   "init.done": "✓ 初始化完成",
 
   // list
@@ -42,6 +45,7 @@ const zh = {
   "use.description": "切换到指定配置方案",
   "use.done": "✓ 已切换到 {name}",
   "use.restart": "重启 Claude Code 生效",
+  "use.cc_switch_running": "检测到 cc-switch GUI 正在运行，为避免配置冲突，仅更新了当前配置标记。请在 cc-switch GUI 中手动切换，或退出 GUI 后重试。",
 
   // save
   "save.description": "从当前 settings.json 保存为新配置",

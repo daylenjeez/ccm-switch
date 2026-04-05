@@ -76,4 +76,5 @@ export class StandaloneStore implements DataStore {
     config.current = name;
     writeConfig(config);
   }
+
 }

@@ -23,6 +23,9 @@ const en: Record<TranslationKey, string> = {
   // init
   "init.description": "Initialize ccm",
   "init.cc_switch_found":"cc-switch detected. Import configurations from it? (Y/n) ",
+  "init.cc_switch_mode": "✓ cc-switch detected — ccm will use cc-switch's configuration store directly",
+  "init.cc_switch_migrate": "Standalone ccm configurations found. Migrate them to cc-switch? (Y/n) ",
+  "init.cc_switch_migrate_done": "✓ Migrated {count} configurations to cc-switch",
   "init.done": "✓ Initialized",
 
   // list
@@ -44,6 +47,7 @@ const en: Record<TranslationKey, string> = {
   "use.description": "Switch to a specified configuration",
   "use.done": "✓ Switched to {name}",
   "use.restart": "Restart Claude Code to apply",
+  "use.cc_switch_running": "cc-switch GUI is running. To avoid config conflicts, only the active marker was updated. Please switch manually in cc-switch GUI, or quit GUI and try again.",
 
   // save
   "save.description": "Save current settings.json as a new configuration",

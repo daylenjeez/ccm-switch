@@ -132,11 +132,11 @@ export class CcSwitchStore implements DataStore {
     });
     tx();
 
-    if (existsSync(SETTINGS_PATH)) {
-      const settings = JSON.parse(readFileSync(SETTINGS_PATH, "utf-8"));
-      settings.currentProviderClaude = profile.id;
-      writeFileSync(SETTINGS_PATH, JSON.stringify(settings, null, 2));
-    }
+    const settings = existsSync(SETTINGS_PATH)
+      ? JSON.parse(readFileSync(SETTINGS_PATH, "utf-8"))
+      : {};
+    settings.currentProviderClaude = profile.id;
+    writeFileSync(SETTINGS_PATH, JSON.stringify(settings, null, 2));
   }
 
   close(): void {

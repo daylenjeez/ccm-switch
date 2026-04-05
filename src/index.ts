@@ -2,7 +2,7 @@
 
 import { Command } from "commander";
 import chalk from "chalk";
-import { readRc, writeRc, getStore } from "./utils.js";
+import { readRc, writeRc, getStore, isCcSwitchGuiRunning } from "./utils.js";
 import { ccSwitchExists } from "./store/cc-switch.js";
 import { readClaudeSettings, applyProfile } from "./claude.js";
 import { createInterface } from "readline";
@@ -182,29 +182,28 @@ program
     console.log(chalk.green(t("init.done")));
 
     if (ccSwitchExists()) {
-      const use = await ask(t("init.cc_switch_found"));
-      if (use.toLowerCase() !== "n") {
-        const { CcSwitchStore } = await import("./store/cc-switch.js");
-        const { StandaloneStore } = await import("./store/standalone.js");
-        const ccStore = new CcSwitchStore();
-        const standaloneStore = new StandaloneStore();
-        const profiles = ccStore.list();
-        const current = ccStore.getCurrent();
+      console.log(chalk.green(t("init.cc_switch_mode")));
 
-        for (const profile of profiles) {
-          standaloneStore.save(profile.name, profile.settingsConfig);
-        }
-        if (current) {
-          standaloneStore.setCurrent(current);
-        }
+      // If standalone config.json has profiles, offer to migrate them into cc-switch DB
+      const { StandaloneStore } = await import("./store/standalone.js");
+      const standaloneStore = new StandaloneStore();
+      const standaloneProfiles = standaloneStore.list();
 
-        console.log(chalk.green(t("sync.done", { count: String(profiles.length) })));
-        if (current) {
-          console.log(chalk.gray(t("sync.current", { name: current })));
-        } else {
-          console.log(chalk.gray(t("sync.no_current")));
+      if (standaloneProfiles.length > 0) {
+        const migrate = await ask(t("init.cc_switch_migrate"));
+        if (migrate.toLowerCase() !== "n") {
+          const { CcSwitchStore } = await import("./store/cc-switch.js");
+          const ccStore = new CcSwitchStore();
+          const standaloneCurrent = standaloneStore.getCurrent();
+          for (const profile of standaloneProfiles) {
+            ccStore.save(profile.name, profile.settingsConfig);
+          }
+          if (standaloneCurrent) {
+            ccStore.setCurrent(standaloneCurrent);
+          }
+          console.log(chalk.green(t("init.cc_switch_migrate_done", { count: String(standaloneProfiles.length) })));
+          ccStore.close();
         }
-        ccStore.close();
       }
     }
   });
@@ -343,12 +342,16 @@ program
       if (name === current) return;
       const profile = store.get(name)!;
       store.setCurrent(profile.name);
-      applyProfile(profile.name, profile.settingsConfig);
-      const env = (profile.settingsConfig.env || {}) as Record<string, string>;
-      const model = env["ANTHROPIC_MODEL"] || t("common.model_default");
       console.log(chalk.green(t("use.done", { name: chalk.bold(profile.name) })));
-      console.log(`  ${t("common.model")}: ${chalk.cyan(model)}`);
-      console.log(chalk.gray(`  ${t("use.restart")}`));
+      if (isCcSwitchGuiRunning()) {
+        console.log(chalk.yellow(t("use.cc_switch_running")));
+      } else {
+        applyProfile(profile.name, profile.settingsConfig);
+        const env = (profile.settingsConfig.env || {}) as Record<string, string>;
+        const model = env["ANTHROPIC_MODEL"] || t("common.model_default");
+        console.log(`  ${t("common.model")}: ${chalk.cyan(model)}`);
+        console.log(chalk.gray(`  ${t("use.restart")}`));
+      }
     };
 
     const isInteractive = process.stdin.isTTY && process.stdout.isTTY;
@@ -452,13 +455,16 @@ program
     if (!profile) return;
 
     store.setCurrent(profile.name);
-    applyProfile(profile.name, profile.settingsConfig);
-
-    const env = (profile.settingsConfig.env || {}) as Record<string, string>;
-    const model = env["ANTHROPIC_MODEL"] || t("common.model_default");
     console.log(chalk.green(t("use.done", { name: chalk.bold(profile.name) })));
-    console.log(`  ${t("common.model")}: ${chalk.cyan(model)}`);
-    console.log(chalk.gray(`  ${t("use.restart")}`));
+    if (isCcSwitchGuiRunning()) {
+      console.log(chalk.yellow(t("use.cc_switch_running")));
+    } else {
+      applyProfile(profile.name, profile.settingsConfig);
+      const env = (profile.settingsConfig.env || {}) as Record<string, string>;
+      const model = env["ANTHROPIC_MODEL"] || t("common.model_default");
+      console.log(`  ${t("common.model")}: ${chalk.cyan(model)}`);
+      console.log(chalk.gray(`  ${t("use.restart")}`));
+    }
   });
 
 // ccm save <name>
@@ -515,9 +521,13 @@ async function saveAndSwitch(store: ReturnType<typeof ensureStore>, name: string
   const switchChoice = await ask(t("add.switch_confirm"));
   if (switchChoice.toLowerCase() !== "n") {
     store.setCurrent(name);
-    applyProfile(name, settingsConfig);
     console.log(chalk.green(t("use.done", { name: chalk.bold(name) })));
-    console.log(chalk.gray(`  ${t("use.restart")}`));
+    if (isCcSwitchGuiRunning()) {
+      console.log(chalk.yellow(t("use.cc_switch_running")));
+    } else {
+      applyProfile(name, settingsConfig);
+      console.log(chalk.gray(`  ${t("use.restart")}`));
+    }
   }
 }
 
@@ -832,9 +842,13 @@ program
       const switchChoice = await ask(t("add.switch_confirm"));
       if (switchChoice.toLowerCase() !== "n") {
         store.setCurrent(profile.name);
-        applyProfile(profile.name, settingsConfig);
         console.log(chalk.green(t("use.done", { name: chalk.bold(profile.name) })));
-        console.log(chalk.gray(`  ${t("use.restart")}`));
+        if (isCcSwitchGuiRunning()) {
+          console.log(chalk.yellow(t("use.cc_switch_running")));
+        } else {
+          applyProfile(profile.name, settingsConfig);
+          console.log(chalk.gray(`  ${t("use.restart")}`));
+        }
       }
     } else {
       applyProfile(profile.name, settingsConfig);

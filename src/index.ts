@@ -13,6 +13,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { t, setLocale, getLocale } from "./i18n/index.js";
 import Enquirer from "enquirer";
+import updateNotifier from "update-notifier";
 const Select = (Enquirer as any).Select;
 
 function createSelect(options: any) {
@@ -44,6 +45,9 @@ function createSelect(options: any) {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageJsonPath = join(__dirname, "..", "package.json");
 const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+
+const notifier = updateNotifier({ pkg: packageJson, updateCheckInterval: 1000 * 60 * 60 * 24 });
+notifier.notify({ isGlobal: true, defer: true });
 
 const program = new Command();
 

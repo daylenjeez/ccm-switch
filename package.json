@@ -1,10 +1,11 @@
 {
-  "name": "@daylenjeez/ccm-switch",
-  "version": "1.3.4",
+  "name": "@daylenjeez/cc-cast",
+  "version": "1.3.5",
   "description": "Claude Code Model Switcher - 快速切换 Claude Code 自定义模型配置",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
+    "cc-cast": "dist/index.js",
     "ccm": "dist/index.js"
   },
   "scripts": {
@@ -20,13 +21,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daylenjeez/ccm-switch.git"
+    "url": "git+https://github.com/daylenjeez/cc-cast.git"
   },
   "dependencies": {
-    "@clack/prompts": "^1.2.0",
     "better-sqlite3": "^12.8.0",
     "chalk": "^5.6.2",
-    "commander": "^14.0.3"
+    "commander": "^14.0.3",
+    "enquirer": "^2.4.1"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",

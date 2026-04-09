@@ -3,10 +3,11 @@ const zh = {
   "program.description": "Claude Code Model Switcher - 快速切换 Claude Code 自定义模型配置",
 
   // common
-  "common.not_init": "尚未初始化，请先运行: ccm init",
+  "common.not_init": "尚未初始化，请先运行: cc-cast init",
   "common.model": "模型",
   "common.model_default": "默认",
   "common.source": "来源",
+  "common.cancelled": "已取消",
 
   // error
   "error.not_found": '配置 "{name}" 不存在',
@@ -16,19 +17,19 @@ const zh = {
   // suggest
   "suggest.did_you_mean": "你是不是想说: {name}?",
   "suggest.did_you_mean_header": "你是不是想说:",
-  "suggest.use_list": "使用 ccm list 查看所有可用配置",
+  "suggest.use_list": "使用 cc-cast list 查看所有可用配置",
 
   // init
-  "init.description": "初始化 ccm",
+  "init.description": "初始化 cc-cast",
   "init.cc_switch_found":"检测到 cc-switch 已安装，是否从中导入配置？(Y/n) ",
-  "init.cc_switch_mode": "✓ 检测到 cc-switch，ccm 将直接使用 cc-switch 配置库",
-  "init.cc_switch_migrate": "发现 ccm 独立配置，是否将其迁移至 cc-switch？(Y/n) ",
+  "init.cc_switch_mode": "✓ 检测到 cc-switch，cc-cast 将直接使用 cc-switch 配置库",
+  "init.cc_switch_migrate": "发现 cc-cast 独立配置，是否将其迁移至 cc-switch？(Y/n) ",
   "init.cc_switch_migrate_done": "✓ 已迁移 {count} 个配置至 cc-switch",
   "init.done": "✓ 初始化完成",
 
   // list
   "list.description": "列出并选择配置方案",
-  "list.empty": "暂无配置方案。使用 ccm save <name> 保存当前配置",
+  "list.empty": "暂无配置方案。使用 cc-cast save <name> 保存当前配置",
   "list.header": "可用配置:",
   "list.select": "选择配置:",
   "list.current_marker": "(当前)",
@@ -54,7 +55,7 @@ const zh = {
 
   // show
   "show.description": "查看配置详情（不指定则显示当前）",
-  "show.no_current": "当前无激活配置，请指定名称: ccm show <name>",
+  "show.no_current": "当前无激活配置，请指定名称: cc-cast show <name>",
   "show.all_header": "所有配置:",
 
   // remove
@@ -65,13 +66,13 @@ const zh = {
 
   // alias
   "alias.description": "管理别名",
-  "alias.set_description": "设置别名，如: ccm alias set or openrouter-opus4.6",
+  "alias.set_description": "设置别名，如: cc-cast alias set or openrouter-opus4.6",
   "alias.set_done": "✓ 别名已设置: {short} → {name}",
   "alias.rm_description": "删除别名",
   "alias.rm_not_found": '别名 "{short}" 不存在',
   "alias.rm_done": '✓ 已删除别名 "{short}"',
   "alias.list_description": "列出所有别名",
-  "alias.list_empty": "暂无别名。使用 ccm alias set <short> <name> 添加",
+  "alias.list_empty": "暂无别名。使用 cc-cast alias set <short> <name> 添加",
   "alias.list_header": "别名列表:",
 
   // locale
@@ -137,8 +138,8 @@ const zh = {
   "sync.no_current": "当前无激活配置",
 
   // clear
-  "clear.description": "清理 ccm 数据文件",
-  "clear.confirm": "确认删除所有 ccm 数据文件？(y/N) ",
+  "clear.description": "清理 cc-cast 数据文件",
+  "clear.confirm": "确认删除所有 cc-cast 数据文件？(y/N) ",
   "clear.cancelled": "已取消清理",
   "clear.removed": "✓ 已删除 {path}",
   "clear.done": "✓ 清理完成",

@@ -7,8 +7,8 @@ import type { DataStore } from "./store/interface.js";
 import { StandaloneStore } from "./store/standalone.js";
 import { CcSwitchStore, ccSwitchExists } from "./store/cc-switch.js";
 
-const CCM_DIR = join(homedir(), ".ccm");
-const RC_PATH = join(CCM_DIR, "rc.json");
+const CC_CAST_DIR = join(homedir(), ".cc-cast");
+const RC_PATH = join(CC_CAST_DIR, "rc.json");
 
 export function readRc(): RcConfig {
   if (!existsSync(RC_PATH)) {
@@ -24,8 +24,8 @@ export function readRc(): RcConfig {
 }
 
 export function writeRc(rc: RcConfig): void {
-  if (!existsSync(CCM_DIR)) {
-    mkdirSync(CCM_DIR, { recursive: true });
+  if (!existsSync(CC_CAST_DIR)) {
+    mkdirSync(CC_CAST_DIR, { recursive: true });
   }
   writeFileSync(RC_PATH, JSON.stringify(rc, null, 2));
 }

@@ -12,7 +12,34 @@ import { tmpdir, homedir } from "os";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { t, setLocale, getLocale } from "./i18n/index.js";
-import * as clack from "@clack/prompts";
+import Enquirer from "enquirer";
+const Select = (Enquirer as any).Select;
+
+function createSelect(options: any) {
+  const prompt = new Select(options);
+  prompt.prefix = async () => "";
+  prompt.separator = async () => "";
+  prompt.cancel = async function (err: any) {
+    this.state.cancelled = true;
+    this.state.submitted = true;
+    this.clear(this.state.size);
+    this.stdout.write("\u001b[?25h");
+    if (typeof this.stop === "function") this.stop();
+    this.emit("cancel", err);
+  };
+  (prompt as any).choiceMessage = function (choice: any, i: number) {
+    const hasColor = (s: string) => /\x1b\[\d+m/.test(String(s));
+    let message = this.resolve(choice.message, this.state, choice, i);
+    if (choice.role === "heading" && !hasColor(message)) {
+      message = this.styles.strong(message);
+    }
+    if (this.index === i && !hasColor(message)) {
+      message = this.styles.primary(message);
+    }
+    return this.resolve(message, this.state, choice, i);
+  };
+  return prompt;
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageJsonPath = join(__dirname, "..", "package.json");
@@ -21,7 +48,7 @@ const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
 const program = new Command();
 
 program
-  .name("ccm")
+  .name("cc-cast")
   .description(t("program.description"))
   .version(packageJson.version);
 
@@ -44,6 +71,35 @@ function ask(question: string, prefill?: string): Promise<string> {
 // Helper: ensure store ready
 function ensureStore() {
   return getStore();
+}
+
+// Helper: print current active configuration
+function printCurrent(): void {
+  const store = ensureStore();
+  const currentName = store.getCurrent();
+
+  if (!currentName) {
+    console.log(chalk.yellow(t("current.none")));
+    console.log(chalk.gray(`\n${t("current.settings_header")}`));
+    const settings = readClaudeSettings();
+    const env = (settings.env || {}) as Record<string, string>;
+    console.log(formatEnv(env));
+    return;
+  }
+
+  const profile = store.get(currentName);
+  if (!profile) {
+    console.log(chalk.yellow(t("current.not_exist", { name: currentName })));
+    return;
+  }
+
+  console.log(`\n${t("current.header", { name: chalk.green.bold(profile.name) })}\n`);
+  const env = (profile.settingsConfig.env || {}) as Record<string, string>;
+  console.log(formatEnv(env));
+  if (profile.settingsConfig.model) {
+    console.log(`  ${chalk.gray("model")}: ${profile.settingsConfig.model}`);
+  }
+  console.log();
 }
 
 // Helper: format env for display
@@ -172,7 +228,7 @@ async function resolveProfile(store: ReturnType<typeof ensureStore>, input: stri
   return null;
 }
 
-// ccm init
+// cc-castinit
 program
   .command("init")
   .description(t("init.description"))
@@ -208,7 +264,7 @@ program
     }
   });
 
-// ccm sync
+// cc-castsync
 program
   .command("sync")
   .description(t("sync.description"))
@@ -248,7 +304,7 @@ program
     ccStore.close();
   });
 
-// ccm clear
+// cc-castclear
 program
   .command("clear")
   .description(t("clear.description"))
@@ -259,8 +315,8 @@ program
       return;
     }
 
-    const rcPath = join(homedir(), ".ccm", "rc.json");
-    const configPath = join(homedir(), ".ccm", "config.json");
+    const rcPath = join(homedir(), ".cc-cast", "rc.json");
+    const configPath = join(homedir(), ".cc-cast", "config.json");
 
     if (existsSync(configPath)) {
       unlinkSync(configPath);
@@ -274,7 +330,7 @@ program
     console.log(chalk.green(t("clear.done")));
   });
 
-// ccm import
+// cc-castimport
 program
   .command("import [file]")
   .description(t("import.description"))
@@ -322,7 +378,7 @@ program
     console.log(chalk.green(t("import.done", { count: String(count) })));
   });
 
-// ccm list
+// cc-castlist
 program
   .command("list")
   .alias("ls")
@@ -371,16 +427,20 @@ program
       });
 
       const initial = profiles.findIndex((p) => p.name === current);
-      const selected = await clack.select({
+      const prompt = createSelect({
         message: "",
-        options,
-        initialValue: initial >= 0 ? profiles[initial].name : profiles[0].name,
+        choices: options.map((o) => ({ name: o.value, message: o.label })),
+        initial: initial >= 0 ? initial : 0,
+        pointer: "●",
+        styles: { em: (k: any) => k, strong: (k: any) => k },
       });
-
-      if (clack.isCancel(selected)) {
-        process.exit(0);
+      try {
+        const value = await prompt.run() as string;
+        switchTo(value);
+      } catch {
+        console.log(chalk.gray(t("common.cancelled")));
+        return;
       }
-      switchTo(selected as string);
     } else {
       // Fallback: numbered list + type to select
       console.log(chalk.bold(`\n${t("list.header")}\n`));
@@ -406,39 +466,15 @@ program
     }
   });
 
-// ccm current
+// cc-castcurrent
 program
   .command("current")
   .description(t("current.description"))
   .action(() => {
-    const store = ensureStore();
-    const currentName = store.getCurrent();
-
-    if (!currentName) {
-      console.log(chalk.yellow(t("current.none")));
-      console.log(chalk.gray(`\n${t("current.settings_header")}`));
-      const settings = readClaudeSettings();
-      const env = (settings.env || {}) as Record<string, string>;
-      console.log(formatEnv(env));
-      return;
-    }
-
-    const profile = store.get(currentName);
-    if (!profile) {
-      console.log(chalk.yellow(t("current.not_exist", { name: currentName })));
-      return;
-    }
-
-    console.log(`\n${t("current.header", { name: chalk.green.bold(profile.name) })}\n`);
-    const env = (profile.settingsConfig.env || {}) as Record<string, string>;
-    console.log(formatEnv(env));
-    if (profile.settingsConfig.model) {
-      console.log(`  ${chalk.gray("model")}: ${profile.settingsConfig.model}`);
-    }
-    console.log();
+    printCurrent();
   });
 
-// ccm use [name]
+// cc-castuse [name]
 program
   .command("use [name]")
   .description(t("use.description"))
@@ -467,7 +503,7 @@ program
     }
   });
 
-// ccm save <name>
+// cc-castsave <name>
 program
   .command("save <name>")
   .description(t("save.description"))
@@ -494,7 +530,7 @@ program
 
 // Helper: open editor with content, return parsed JSON or null
 function openEditor(name: string, content: Record<string, unknown>): Record<string, unknown> | null {
-  const tmpFile = join(tmpdir(), `ccm-${name}-${Date.now()}.json`);
+  const tmpFile = join(tmpdir(), `cc-cast-${name}-${Date.now()}.json`);
   writeFileSync(tmpFile, JSON.stringify(content, null, 2));
 
   const editor = process.env.EDITOR || "vi";
@@ -544,7 +580,7 @@ function getKnownBaseUrl(name: string): string | undefined {
   return BUILTIN_BASE_URLS[name.toLowerCase()];
 }
 
-// ccm add
+// cc-castadd
 program
   .command("add")
   .alias("new")
@@ -657,7 +693,7 @@ program
     await saveAndSwitch(store, name, settingsConfig);
   });
 
-// ccm show [name]
+// cc-castshow [name]
 program
   .command("show [name]")
   .description(t("show.description"))
@@ -693,7 +729,7 @@ program
     console.log();
   });
 
-// ccm modify [name]
+// cc-castmodify [name]
 program
   .command("modify [name]")
   .alias("edit")
@@ -725,15 +761,18 @@ program
           };
         });
 
-        const selected = await clack.select({
+        const prompt = createSelect({
           message: "",
-          options,
+          choices: options.map((o) => ({ name: o.value, message: o.label, hint: o.hint })),
+          pointer: "●",
+          styles: { em: (k: any) => k, strong: (k: any) => k },
         });
-
-        if (clack.isCancel(selected)) {
-          process.exit(0);
+        try {
+          name = await prompt.run() as string;
+        } catch {
+          console.log(chalk.gray(t("common.cancelled")));
+          return;
         }
-        name = selected as string;
       } else {
         console.log(chalk.bold(`\n${t("list.header")}\n`));
         profiles.forEach((p, i) => {
@@ -856,7 +895,7 @@ program
     }
   });
 
-// ccm remove [name]
+// cc-castremove [name]
 program
   .command("remove [name]")
   .alias("rm")
@@ -887,15 +926,18 @@ program
           };
         });
 
-        const selected = await clack.select({
+        const prompt = createSelect({
           message: "",
-          options,
+          choices: options.map((o) => ({ name: o.value, message: o.label, hint: o.hint })),
+          pointer: "●",
+          styles: { em: (k: any) => k, strong: (k: any) => k },
         });
-
-        if (clack.isCancel(selected)) {
-          process.exit(0);
+        try {
+          name = await prompt.run() as string;
+        } catch {
+          console.log(chalk.gray(t("common.cancelled")));
+          return;
         }
-        name = selected as string;
       } else {
         console.log(chalk.bold(`\n${t("list.header")}\n`));
         profiles.forEach((p, i) => {
@@ -948,7 +990,7 @@ program
     console.log(chalk.green(t("remove.done", { name: profile.name })));
   });
 
-// ccm alias
+// cc-castalias
 const aliasCmd = program
   .command("alias")
   .description(t("alias.description"));
@@ -1010,12 +1052,12 @@ aliasCmd
     console.log();
   });
 
-// Default: ccm alias (no subcommand) → show list
+// Default: cc-cast alias (no subcommand) → show list
 aliasCmd.action(() => {
   aliasCmd.commands.find((c) => c.name() === "list")!.parseAsync([]);
 });
 
-// ccm locale
+// cc-castlocale
 const localeCmd = program
   .command("locale")
   .description(t("locale.description"));
@@ -1060,15 +1102,22 @@ localeCmd
         return { label: `${code} - ${label}${tag}`, value: code };
       });
 
-      const selected = await clack.select({
+      const initialIdx = options.findIndex((o) => o.value === current);
+      const prompt = createSelect({
         message: "",
-        options,
-        initialValue: current,
+        choices: options.map((o) => ({ name: o.value, message: o.label })),
+        initial: initialIdx >= 0 ? initialIdx : 0,
+        pointer: "●",
+        styles: { em: (k: any) => k, strong: (k: any) => k },
       });
-
-      if (clack.isCancel(selected)) process.exit(0);
-      if (selected === current) return;
-      switchLocale(selected as string);
+      try {
+        const value = await prompt.run() as string;
+        if (value === current) return;
+        switchLocale(value);
+      } catch {
+        console.log(chalk.gray(t("common.cancelled")));
+        return;
+      }
     } else {
       console.log(chalk.bold(`\n${t("locale.list_header")}\n`));
       SUPPORTED_LOCALES.forEach(({ code, label }, i) => {
@@ -1092,7 +1141,7 @@ localeCmd
     }
   });
 
-// Default: ccm locale (no subcommand) → show list
+// Default: cc-cast locale (no subcommand) → show list
 localeCmd.action(() => {
   localeCmd.commands.find((c) => c.name() === "list")!.parseAsync([]);
 });

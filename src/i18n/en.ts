@@ -5,10 +5,11 @@ const en: Record<TranslationKey, string> = {
   "program.description": "Claude Code Model Switcher - Quickly switch Claude Code custom model configurations",
 
   // common
-  "common.not_init": "Not initialized yet. Run: ccm init",
+  "common.not_init": "Not initialized yet. Run: cc-cast init",
   "common.model": "Model",
   "common.model_default": "default",
   "common.source": "Source",
+  "common.cancelled": "cancelled",
 
   // error
   "error.not_found": 'Configuration "{name}" not found',
@@ -18,19 +19,19 @@ const en: Record<TranslationKey, string> = {
   // suggest
   "suggest.did_you_mean": "Did you mean: {name}?",
   "suggest.did_you_mean_header": "Did you mean:",
-  "suggest.use_list": "Use ccm list to see all available configurations",
+  "suggest.use_list": "Use cc-cast list to see all available configurations",
 
   // init
-  "init.description": "Initialize ccm",
+  "init.description": "Initialize cc-cast",
   "init.cc_switch_found":"cc-switch detected. Import configurations from it? (Y/n) ",
-  "init.cc_switch_mode": "✓ cc-switch detected — ccm will use cc-switch's configuration store directly",
-  "init.cc_switch_migrate": "Standalone ccm configurations found. Migrate them to cc-switch? (Y/n) ",
+  "init.cc_switch_mode": "✓ cc-switch detected — cc-cast will use cc-switch's configuration store directly",
+  "init.cc_switch_migrate": "Standalone cc-cast configurations found. Migrate them to cc-switch? (Y/n) ",
   "init.cc_switch_migrate_done": "✓ Migrated {count} configurations to cc-switch",
   "init.done": "✓ Initialized",
 
   // list
   "list.description": "List and select configurations",
-  "list.empty": "No configurations yet. Use ccm save <name> to save current config",
+  "list.empty": "No configurations yet. Use cc-cast save <name> to save current config",
   "list.header": "Available configurations:",
   "list.select": "Select configuration:",
   "list.current_marker": "(current)",
@@ -56,7 +57,7 @@ const en: Record<TranslationKey, string> = {
 
   // show
   "show.description": "View configuration details (defaults to current)",
-  "show.no_current": "No active configuration. Specify a name: ccm show <name>",
+  "show.no_current": "No active configuration. Specify a name: cc-cast show <name>",
   "show.all_header": "All configurations:",
 
   // remove
@@ -67,13 +68,13 @@ const en: Record<TranslationKey, string> = {
 
   // alias
   "alias.description": "Manage aliases",
-  "alias.set_description": "Set alias, e.g.: ccm alias set or openrouter-opus4.6",
+  "alias.set_description": "Set alias, e.g.: cc-cast alias set or openrouter-opus4.6",
   "alias.set_done": "✓ Alias set: {short} → {name}",
   "alias.rm_description": "Remove an alias",
   "alias.rm_not_found": 'Alias "{short}" not found',
   "alias.rm_done": '✓ Removed alias "{short}"',
   "alias.list_description": "List all aliases",
-  "alias.list_empty": "No aliases yet. Use ccm alias set <short> <name> to add one",
+  "alias.list_empty": "No aliases yet. Use cc-cast alias set <short> <name> to add one",
   "alias.list_header": "Aliases:",
 
   // locale
@@ -139,8 +140,8 @@ const en: Record<TranslationKey, string> = {
   "sync.no_current": "No active configuration",
 
   // clear
-  "clear.description": "Clean up ccm data files",
-  "clear.confirm": "Delete all ccm data files? (y/N) ",
+  "clear.description": "Clean up cc-cast data files",
+  "clear.confirm": "Delete all cc-cast data files? (y/N) ",
   "clear.cancelled": "Cancelled",
   "clear.removed": "✓ Deleted {path}",
   "clear.done": "✓ Cleanup complete",

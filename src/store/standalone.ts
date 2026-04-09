@@ -4,8 +4,8 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import type { DataStore, Profile } from "./interface.js";
 import { t } from "../i18n/index.js";
 
-const CCM_DIR = join(homedir(), ".ccm");
-const CONFIG_PATH = join(CCM_DIR, "config.json");
+const CC_CAST_DIR = join(homedir(), ".cc-cast");
+const CONFIG_PATH = join(CC_CAST_DIR, "config.json");
 
 interface StandaloneConfig {
   current?: string;
@@ -13,8 +13,8 @@ interface StandaloneConfig {
 }
 
 function ensureDir(): void {
-  if (!existsSync(CCM_DIR)) {
-    mkdirSync(CCM_DIR, { recursive: true });
+  if (!existsSync(CC_CAST_DIR)) {
+    mkdirSync(CC_CAST_DIR, { recursive: true });
   }
 }
 

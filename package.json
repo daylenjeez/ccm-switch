@@ -5,8 +5,8 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "cc-cast": "dist/index.js",
-    "ccm": "dist/index.js"
+    "ccm": "dist/index.js",
+    "ccc": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",

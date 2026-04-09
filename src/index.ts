@@ -48,7 +48,7 @@ const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
 const program = new Command();
 
 program
-  .name("cc-cast")
+  .name("ccc")
   .description(t("program.description"))
   .version(packageJson.version);
 
